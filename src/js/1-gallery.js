@@ -68,32 +68,33 @@ const images = [
   },
 ];
 
-const listElem = document.querySelector('.gallery');
+const galleryElem = document.querySelector('.gallery');
 
-function imageListTemplate(images) {
-    const markup = images.map(elem => {
-        return `<li class="gallery-item">
-        <a class="gallery-link" href="${elem.original}">
-          <img
-            class="gallery-image"
-            src="${elem.preview}"
-            data-source="${elem.original}"
-            alt="${elem.description}"
-          />
-        </a>
-      </li>
-      `
-    }).join('');
-        return markup;
+function createGallery({preview, original, description}) {
+  const item = document.createElement('li');
+  item.classList.add('gallery-item');
+
+  const link = document.createElement('a');
+  link.classList.add('gallery-link');
+  link.setAttribute('href', original);
+
+  const image = document.createElement('img');
+  image.classList.add('gallery-image');
+  image.setAttribute('src', preview);
+  image.setAttribute('alt', description);
+  image.setAttribute('data-sourse', original);
+
+  item.append(link);
+  link.append(image);
+  return item;
 }
-    const markup = imageListTemplate(images);
-listElem.innerHTML = markup;
-    
+
+const markup = images.map(createGallery);
+galleryElem.append(...markup);
+
 let gallery = new SimpleLightbox('.gallery a',
     {
-    captionsData: 'alt',   
-    captionDelay: 250,
-  }
+      captionsData: 'alt',   
+      captionDelay: 250,
+    }
 );
-
-
