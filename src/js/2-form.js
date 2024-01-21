@@ -14,10 +14,13 @@ formElem.addEventListener('input', e => {
 
 formElem.addEventListener('submit', e => {
     e.preventDefault();
-    const { email, message } = loadFromLs(storageKey) || {};
-    console.log({ email, message });
-    localStorage.removeItem(storageKey);
-    formElem.reset();
+        const { email, message } = loadFromLs(storageKey) || {};
+
+    if (email && message) {
+        console.log({ email, message });
+        localStorage.removeItem(storageKey);
+        formElem.reset();
+    }
 })
 
 function saveToLs(key, value) {
